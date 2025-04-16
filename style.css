@@ -109,7 +109,7 @@ height: 1px;
         font-size: 20px;
         font-weight: 500;
         margin-left: 50px;
-        color: ##bfa7cc;
+        
     }
     .first{
         font-size: 50px;
@@ -322,3 +322,151 @@ margin-bottom: 30px;
     font-size: 17px;
     border-style: none;
   }
+
+  @media (max-width: 428px) {
+    .navbar {
+        height: auto; /* Adjust height for more content */
+        flex-direction: column; /* Stack logo/text and navigation */
+        align-items: flex-start; /* Align items to the left */
+        padding: 10px; /* Adjust padding for smaller screens */
+        position: unset;
+    }
+
+    .nav-logo {
+        margin-bottom: 10px; /* Add space between logo/text and navigation */
+    }
+
+    .logo {
+        height: 40px; /* Slightly smaller logo */
+        width: 40px;
+        margin-right: 10px; /* Adjust spacing */
+    }
+
+    .nav-text {
+        margin-left: 0; /* Reset left margin */
+    }
+
+    .head {
+        font-size: 1.2rem; /* Smaller heading */
+        margin-bottom: 2px;
+    }
+
+    .head2 {
+        font-size: 0.8rem; /* Smaller sub-heading */
+    }
+
+    .nav-list ul {
+        flex-direction: column; /* Stack list items vertically */
+        width: 100%; /* Make the list take full width */
+    }
+
+    .nav-list ul a {
+        margin-left: 0; /* Reset left margin for stacked items */
+        padding: 10px 0; /* Add vertical padding for better touch targets */
+        border-bottom: 1px solid #ddd; /* Add separators between links */
+        display: block; /* Make links take full width of the list item */
+    }
+
+    .nav-list ul a:last-child {
+        border-bottom: none; /* Remove border from the last item */
+    }
+
+
+
+
+    .main-1 {
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+    }
+
+    .main-logo {
+        width: 250px;
+        height: 250px;
+        margin: 20px auto;
+    }
+
+    .first {
+        font-size: 2rem;
+        width: 100%;
+    }
+
+    .sec {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .btn {
+        font-size: 1rem;
+    }
+
+    .main-box1 {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .box2, .ebox {
+        width: 90%;
+        text-align: center;
+    }
+
+    .panic {
+        font-size: 1.5rem;
+    }
+
+    .diss {
+        font-size: 1rem;
+    }
+
+    .image img,
+    .image2 img,
+    .image3 img,
+    .image4 img,
+    .image5 img {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 10px;
+    }
+
+    .a, .b {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+
+
+
+    .foot {
+        padding: 10px;
+        height: auto;
+        text-align: center;
+    }
+
+    .foot1 {
+        font-size: 1.1rem;
+    }
+
+    .foot3 {
+        font-size: 1rem;
+        margin-top: 15px;
+    }
+
+    .btn1,
+    .btn2 {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+
+    .foot6 {
+        margin-top: 20px;
+    }
+
+    .foot7 {
+        margin-bottom: 20px;
+    }
+
+    .line2 {
+        margin-top: 10px;
+    }
+}
+  
