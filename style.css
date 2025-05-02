@@ -323,10 +323,10 @@ margin-bottom: 30px;
     border-style: none;
   }
 
-  @media (max-width: 428px) {
+  @media (max-width: 480px) {
     .navbar {
         height: auto; /* Adjust height for more content */
-        flex-direction: column; /* Stack logo/text and navigation */
+       /* Stack logo/text and navigation */
         align-items: flex-start; /* Align items to the left */
         padding: 10px; /* Adjust padding for smaller screens */
         position: unset;
