@@ -113,6 +113,9 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
+  
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
 
   <script>
 
@@ -129,6 +132,25 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+
+   // Initialize Firebase Authentication
+   const auth = firebase.auth();
+
+// Sign in anonymously
+auth.signInAnonymously()
+  .then(() => {
+    console.log("Signed in anonymously");
+  })
+  .catch((error) => {
+    console.error("Error signing in anonymously:", error.message);
+  });
+
+  db.collection("test").add({ test: "connection" })
+  .then(() => console.log("Firestore connected successfully"))
+  .catch((error) => console.error("Error connecting to Firestore:", error));
+
+
+
 
   function addContact() {
     const table = document.getElementById("contactsTable");
@@ -169,10 +191,9 @@
   const age = document.getElementById("age").value.trim();
   const address = document.getElementById("address").value.trim();
 
-  // Emergency contacts data
   const contactRows = document.getElementById("contactsTable").rows;
   const emergencyContacts = [];
-  
+
   for (let i = 0; i < contactRows.length; i++) {
     const cells = contactRows[i].getElementsByTagName("input");
     const contactName = cells[0].value.trim();
@@ -182,7 +203,6 @@
     }
   }
 
-  // Store data in Firestore (create a new document for each user with phone number as document ID)
   db.collection("users").doc(phone).set({
     phone,
     name,
@@ -192,15 +212,15 @@
     address,
     emergencyContacts
   }).then(() => {
-    // Data saved successfully
     console.log("Data saved successfully!");
     document.getElementById("statusMsg").textContent = "Saved successfully!";
-    resetForm(); // Optionally, reset the form after saving data
+    resetForm();
+    window.location.href = "index.html";
   }).catch((error) => {
-    console.error("Error saving data: ", error.message);
+    console.error("Error saving data:", error.message);
+    document.getElementById("statusMsg").textContent = "Error saving data: " + error.message;
   });
 }
-
 
   function resetForm() {
     // Reset form fields
@@ -236,6 +256,7 @@
     } else {
       console.log("No such document!");
     }
+    window.location.href = "index.html"; 
   }).catch((error) => {
     console.error("Error getting document: ", error);
   });
