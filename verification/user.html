@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Details</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f7f3f9;
+    }
+    h2 {
+      color: purple;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      margin-top: 12px;
+      transition: background-color 0.3s;
+    }
+    button:disabled {
+      background-color: #ccc;
+      color: #666;
+    }
+    button:not(:disabled) {
+      background-color: purple;
+      color: white;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      margin-top: 10px;
+    }
+    table td {
+      padding: 5px;
+    }
+    .status {
+      margin-top: 10px;
+      color: green;
+    }
+    .add-contact-btn {
+      width: auto;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding: 6px 12px;
+      background: #6200ee;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Your Details</h2>
+
+  <label>Phone Number</label>
+  <input type="text" id="phone" placeholder="Enter phone number" oninput="validateForm()">
+
+  <label>Name</label>
+  <input type="text" id="name" placeholder="Enter your name" oninput="validateForm()">
+
+  <label>Alternative Phone Number</label>
+  <input type="text" id="altPhone" placeholder="Enter alternative phone number">
+
+  <label>Gender</label>
+  <select id="gender" onchange="validateForm()">
+    <option value="">Select Gender</option>
+    <option>Female</option>
+    <option>Male</option>
+    <option>Other</option>
+  </select>
+
+  <label>Age</label>
+  <input type="number" id="age" placeholder="Enter your age" oninput="validateForm()">
+
+  <label>Address</label>
+  <input type="text" id="address" placeholder="Enter your address" oninput="validateForm()">
+
+  <label>Emergency Contacts (Min 3 required)</label>
+  <table id="contactsTable">
+    <tr>
+      <td><input type="text" placeholder="Contact Name" oninput="validateForm()"></td>
+      <td><input type="text" placeholder="Phone Number" oninput="validateForm()"></td>
+    </tr>
+    <tr>
+      <td><input type="text" placeholder="Contact Name" oninput="validateForm()"></td>
+      <td><input type="text" placeholder="Phone Number" oninput="validateForm()"></td>
+    </tr>
+    <tr>
+      <td><input type="text" placeholder="Contact Name" oninput="validateForm()"></td>
+      <td><input type="text" placeholder="Phone Number" oninput="validateForm()"></td>
+    </tr>
+  </table>
+  <button class="add-contact-btn" onclick="addContact()">+ Add Contact</button>
+
+  <button id="saveBtn" onclick="saveData()" disabled>Save & Continue</button>
+  <p class="status" id="statusMsg"></p>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+
+  <script>
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyCnOIOdlGEr27-YC4oeIINBTZ6j9tNfROY",
+  authDomain: "veerangana-a8a70.firebaseapp.com",
+  projectId: "veerangana-a8a70",
+  storageBucket: "veerangana-a8a70.firebasestorage.app",
+  messagingSenderId: "50583172701",
+  appId: "1:50583172701:web:f9ffc33cf6da25680effb4",
+  measurementId: "G-Y76VL9WJZ0"
+};
+
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  function addContact() {
+    const table = document.getElementById("contactsTable");
+    const row = table.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+
+    cell1.innerHTML = '<input type="text" placeholder="Contact Name" oninput="validateForm()">';
+    cell2.innerHTML = '<input type="text" placeholder="Phone Number" oninput="validateForm()">';
+    validateForm();
+  }
+
+  function validateForm() {
+    const phone = document.getElementById("phone").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const gender = document.getElementById("gender").value;
+    const age = document.getElementById("age").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    const contactRows = document.getElementById("contactsTable").rows;
+    let filledContacts = 0;
+    for (let i = 0; i < contactRows.length; i++) {
+      const inputs = contactRows[i].getElementsByTagName("input");
+      const contactName = inputs[0].value.trim();
+      const contactPhone = inputs[1].value.trim();
+      if (contactName && contactPhone) filledContacts++;
+    }
+
+    const isValid = phone && name && gender && age && address && filledContacts >= 3;
+    document.getElementById("saveBtn").disabled = !isValid;
+  }
+
+  function saveData() {
+  const phone = document.getElementById("phone").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const altPhone = document.getElementById("altPhone").value.trim();
+  const gender = document.getElementById("gender").value;
+  const age = document.getElementById("age").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  // Emergency contacts data
+  const contactRows = document.getElementById("contactsTable").rows;
+  const emergencyContacts = [];
+  
+  for (let i = 0; i < contactRows.length; i++) {
+    const cells = contactRows[i].getElementsByTagName("input");
+    const contactName = cells[0].value.trim();
+    const contactPhone = cells[1].value.trim();
+    if (contactName && contactPhone) {
+      emergencyContacts.push({ name: contactName, phone: contactPhone });
+    }
+  }
+
+  // Store data in Firestore (create a new document for each user with phone number as document ID)
+  db.collection("users").doc(phone).set({
+    phone,
+    name,
+    altPhone,
+    gender,
+    age,
+    address,
+    emergencyContacts
+  }).then(() => {
+    // Data saved successfully
+    console.log("Data saved successfully!");
+    document.getElementById("statusMsg").textContent = "Saved successfully!";
+    resetForm(); // Optionally, reset the form after saving data
+  }).catch((error) => {
+    console.error("Error saving data: ", error.message);
+  });
+}
+
+
+  function resetForm() {
+    // Reset form fields
+    document.getElementById("phone").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("altPhone").value = "";
+    document.getElementById("gender").value = "";
+    document.getElementById("age").value = "";
+    document.getElementById("address").value = "";
+
+    // Reset contacts table to 3 empty rows
+    const table = document.getElementById("contactsTable");
+    while (table.rows.length > 0) table.deleteRow(0);
+
+    for (let i = 0; i < 3; i++) {
+      const row = table.insertRow();
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      cell1.innerHTML = '<input type="text" placeholder="Contact Name" oninput="validateForm()">';
+      cell2.innerHTML = '<input type="text" placeholder="Phone Number" oninput="validateForm()">';
+    }
+
+    // Disable save button again
+    document.getElementById("saveBtn").disabled = true;
+  }
+
+  function getData() {
+  const phone = "1234567890"; // Example phone number
+  db.collection("users").doc(phone).get().then((doc) => {
+    if (doc.exists) {
+      console.log("User data:", doc.data());
+      // You can now use this data to populate your UI, etc.
+    } else {
+      console.log("No such document!");
+    }
+  }).catch((error) => {
+    console.error("Error getting document: ", error);
+  });
+}
+</script>
+
+  
+
+</body>
+</html>
