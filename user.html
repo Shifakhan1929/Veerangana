@@ -119,6 +119,16 @@
 
   <script>
 
+    // Read phone number from URL if present
+window.onload = function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const phone = urlParams.get('phone');
+  if (phone) {
+    document.getElementById("phone").value = phone;
+  }
+};
+
+
     const firebaseConfig = {
   apiKey: "AIzaSyCnOIOdlGEr27-YC4oeIINBTZ6j9tNfROY",
   authDomain: "veerangana-a8a70.firebaseapp.com",
