@@ -17,7 +17,7 @@ let recaptchaVerifier;
 
 window.onload = function () {
   recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
-    size: "invisible",
+    // size: "invisible",
   });
   recaptchaVerifier.render();
 };
@@ -70,7 +70,7 @@ function verifyOTP() {
       db.collection("users").doc(phoneNumber).get()
         .then((doc) => {
           if (doc.exists) {
-            window.location.href = "index.html";
+            window.location.href = "home.html";
           } else {
             // Redirect to user.html with phone number in query
             window.location.href = `user.html?phone=${encodeURIComponent(phoneNumber)}`;

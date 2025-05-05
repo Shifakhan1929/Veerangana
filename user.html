@@ -147,17 +147,17 @@ window.onload = function () {
    const auth = firebase.auth();
 
 // Sign in anonymously
-auth.signInAnonymously()
-  .then(() => {
-    console.log("Signed in anonymously");
-  })
-  .catch((error) => {
-    console.error("Error signing in anonymously:", error.message);
-  });
+// auth.signInAnonymously()
+//   .then(() => {
+//     console.log("Signed in anonymously");
+//   })
+//   .catch((error) => {
+//     console.error("Error signing in anonymously:", error.message);
+//   });
 
-  db.collection("test").add({ test: "connection" })
-  .then(() => console.log("Firestore connected successfully"))
-  .catch((error) => console.error("Error connecting to Firestore:", error));
+//   db.collection("test").add({ test: "connection" })
+//   .then(() => console.log("Firestore connected successfully"))
+//   .catch((error) => console.error("Error connecting to Firestore:", error));
 
 
 
@@ -194,7 +194,14 @@ auth.signInAnonymously()
   }
 
   function saveData() {
-  const phone = document.getElementById("phone").value.trim();
+  // const phone = document.getElementById("phone").value.trim();
+  let phone = document.getElementById("phone").value.trim();
+phone = phone.replace(/^\+91/, ''); // Remove +91 if present
+phone = phone.replace(/[^0-9]/g, ''); // Remove any non-numeric characters
+  if (phone.length !== 10) {
+    alert("Please enter a valid 10-digit phone number without +91.");
+    return;
+  }
   const name = document.getElementById("name").value.trim();
   const altPhone = document.getElementById("altPhone").value.trim();
   const gender = document.getElementById("gender").value;
@@ -223,9 +230,10 @@ auth.signInAnonymously()
     emergencyContacts
   }).then(() => {
     console.log("Data saved successfully!");
+    alert("Saved successfully!");
     document.getElementById("statusMsg").textContent = "Saved successfully!";
     resetForm();
-    window.location.href = "index.html";
+    window.location.href = "home.html";
   }).catch((error) => {
     console.error("Error saving data:", error.message);
     document.getElementById("statusMsg").textContent = "Error saving data: " + error.message;
@@ -266,7 +274,7 @@ auth.signInAnonymously()
     } else {
       console.log("No such document!");
     }
-    window.location.href = "index.html"; 
+    window.location.href = "home.html"; 
   }).catch((error) => {
     console.error("Error getting document: ", error);
   });

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f3fd;
+    }
+
+    /* body {
+      font-family: Arial;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    } */
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+    }
+
+
+    header {
+      background: linear-gradient(135deg, #d500f9, #9c27b0);
+      padding: 20px;
+      color: white;
+      text-align: center;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      padding: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      margin-top: 10px;
+    }
+
+    .card p {
+      margin: 10px 0;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      border-top: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .bottom-nav div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .bottom-nav .active {
+      color: #9c27b0;
+    }
+
+    .bottom-nav i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>Women Safety App</h1>
+  <p>Your safety, our priority</p>
+</header>
+
+<div class="grid">
+  <div class="card">
+    <img src="image/download (1).png" alt="Panic Mode">
+    <p>Panic Mode</p>
+  </div>
+  <div class="card">
+    <img src="image/download (2).png" alt="Police Contact">
+    <p>Police Contact</p>
+  </div>
+  <div class="card">
+    <img src="image/download (3).png" alt="SOS">
+    <p>SOS</p>
+  </div>
+  <div class="card">
+    <img src="image/download (4).png" alt="Live Tracking">
+    <p>Live Tracking</p>
+  </div>
+  <div class="card">
+    <img src="image/download (5).png" alt="Voice Recording">
+    <p>Voice Recording</p>
+  </div>
+  <div class="card">
+    <img src="image/download (6).png" alt="Video Recording">
+    <p>Video Recording</p>
+  </div>
+  <div class="card">
+    <img src="image/download.png" alt="Emergency">
+    <p>Emergency</p>
+  </div>
+  <div class="card">
+    <img src="image/download.png" alt="Profile">
+    <p>Profile</p>
+  </div>
+</div>
+
+<!-- <div class="bottom-nav">
+  <div><i class="fas fa-home"></i><span>Home</span></div>
+  <div><i class="fas fa-bullhorn"></i><span>SOS</span></div>
+  <div><i class="fas fa-book"></i><span>Logs</span></div>
+  <div class="active"><i class="fas fa-user"></i><span>Profile</span></div>
+</div> -->
+
+<h2>Allow location access?</h2>
+<button onclick="handleLocation(true)">Yes, allow</button>
+<button onclick="handleLocation(false)">No, skip</button>
+
+<script type="module" src="home.js"></script>
+
+
+</body>
+</html>
